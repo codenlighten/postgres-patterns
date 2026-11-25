@@ -1,4 +1,4 @@
-# postgres-patterns: seven PostgreSQL studies, each proved by a test
+# postgres-patterns: seven PostgreSQL studies, each demonstrated by a test
 
 Runnable studies of how PostgreSQL actually behaves when it matters: constraints, concurrency anomalies, job queues, pagination while data changes, indexes, row-level security and migrations on a live table. Each study is a short, commented SQL file plus tests that demonstrate the problem, show the fix, and fail if the fix is removed. Two of them come with measured timings.
 
@@ -19,7 +19,7 @@ Set `TEST_DATABASE_URL` to use another server (a superuser connection; every tes
 
 ## The studies
 
-| # | Study | What the tests prove |
+| # | Study | What the tests demonstrate |
 |---|---|---|
 | 1 | [Constraints](sql/01_constraints.sql) | An exclusion constraint refuses overlapping bookings of one room, however the inserts race; back-to-back bookings are allowed; empty, unbounded and `infinity` ranges are refused. Under a 16-way race a plain `INSERT` can deadlock, and `ON CONFLICT DO NOTHING` does not (numbers below). |
 | 2 | [Isolation](sql/02_isolation.sql) | A read-modify-write loses an update at READ COMMITTED; `SET n = n + 1` or `SELECT ... FOR UPDATE` fixes it. "Someone must stay on call" breaks under REPEATABLE READ (write skew) and holds under SERIALIZABLE, where the aborted transaction is retried and sees the new state. |
@@ -51,7 +51,7 @@ OFFSET cost grows with how deep the page is, because PostgreSQL still walks and 
 | `where lower(email) = ?` | no index | 20.76 / 20.65 | |
 | | expression index | 0.10 / 0.09 | about 200 times faster |
 | 20 oldest open orders (1% of rows) | full index on `created_at` | 0.31 / 0.30 | |
-| | partial index (open only) | 0.24 / 0.20 | **Inconclusive on time:** the fastest-to-slowest ranges overlap. What is proved is size: a test asserts the partial index is under 1/20 of the full one. |
+| | partial index (open only) | 0.24 / 0.20 | **Inconclusive on time:** the fastest-to-slowest ranges overlap. What is shown is size: a test asserts the partial index is under 1/20 of the full one. |
 | Totals for one `customer_id` | index on `customer_id` | 0.22 / 0.20 | |
 | | covering index (`INCLUDE total`) | 0.25 / 0.19 | **No difference measured.** The plan does change to an index-only scan (asserted by a test), but with this table fully in memory the time did not move. |
 
