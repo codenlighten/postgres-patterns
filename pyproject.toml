@@ -1,0 +1,33 @@
+[project]
+name = "postgres-patterns"
+version = "0.1.0"
+description = "Runnable studies of PostgreSQL behaviour: constraints, isolation, queues, pagination, indexes, row-level security and safe migrations. Every claim has a test."
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = ["psycopg[binary]>=3.2"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["patterns"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["patterns", "tests", "bench"]
