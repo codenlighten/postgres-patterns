@@ -1,5 +1,7 @@
 # postgres-patterns: seven PostgreSQL studies, each demonstrated by a test
 
+[![CI](https://github.com/codenlighten/postgres-patterns/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/codenlighten/postgres-patterns/actions/workflows/ci.yml)
+
 Runnable studies of how PostgreSQL actually behaves when it matters: constraints, concurrency anomalies, job queues, pagination while data changes, indexes, row-level security and migrations on a live table. Each study is a short, commented SQL file plus tests that demonstrate the problem, show the fix, and fail if the fix is removed. Two of them come with measured timings.
 
 It shows database engineering as evidence: not "use an index" but "this is the plan the planner chose, this is the size, this is the time, and here is what I could not show".
