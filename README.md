@@ -8,10 +8,11 @@ It shows database engineering as evidence: not "use an index" but "this is the p
 
 ## Run it
 
-Needs Python 3.12 and Docker.
+Needs Python 3.12 or newer (CI runs 3.12) and Docker.
 
 ```bash
 docker compose up -d --wait            # PostgreSQL 16 on 127.0.0.1:54333
+python3 -m venv .venv && . .venv/bin/activate
 pip install -e ".[dev]"
 pytest                                 # 45 tests, about 8 seconds
 python -m bench.run                    # the timings below, a few seconds
